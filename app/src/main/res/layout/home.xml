@@ -39,7 +39,7 @@
         android:background="@drawable/rounded_button"
         android:fontFamily="@font/maple_light"
         android:text="종료"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/rounded_button_text_color"
         android:textSize="20dp" />
 
 
