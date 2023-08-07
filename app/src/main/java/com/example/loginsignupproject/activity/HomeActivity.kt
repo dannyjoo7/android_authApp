@@ -30,7 +30,7 @@ class HomeActivity : ComponentActivity() {
         }
 
         // 종료 버튼 클릭 시...
-        finishBtn!!.setOnClickListener{
+        finishBtn!!.setOnClickListener {
             finish()
         }
     }

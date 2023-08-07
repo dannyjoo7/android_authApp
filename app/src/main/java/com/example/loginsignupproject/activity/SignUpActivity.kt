@@ -1,6 +1,8 @@
 package com.example.loginsignupproject.activity
 
 import Account
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -11,6 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.result.contract.ActivityResultContract
 import com.example.loginsignupproject.R
 
 class SignUpActivity : ComponentActivity() {
@@ -51,12 +54,19 @@ class SignUpActivity : ComponentActivity() {
                 Toast.makeText(this@SignUpActivity, "빈 칸이 존재합니다.", Toast.LENGTH_SHORT).show()
             } else if (inputId!!.isEnabled) {
                 Toast.makeText(this@SignUpActivity, "ID 중복 여부 확인", Toast.LENGTH_SHORT).show()
-            }else if (!pwCheckTxt!!.text.equals("같음!")) {
+            } else if (!pwCheckTxt!!.text.equals("같음!")) {
                 Toast.makeText(this@SignUpActivity, "비밀 번호 재확인", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this@SignUpActivity, "회원 가입 성공!", Toast.LENGTH_SHORT).show()
                 am.list.add(Account(id, pw, name))
-                finish()
+
+                // 결과값 리턴 부분...
+                val intent = Intent(this, MainActivity::class.java).apply {
+                    putExtra("ID", id);
+                    putExtra("PASSWORD", pw);
+                }
+                setResult(RESULT_OK, intent)
+                if (!isFinishing) finish()
             }
         }
 
@@ -72,6 +82,7 @@ class SignUpActivity : ComponentActivity() {
             }
         }
 
+        // 비밀번호 재입력 체크...
         input_PwCheck!!.addTextChangedListener(object : TextWatcher {
 
             var passwd = "" // 초기에는 빈 문자열로 초기화

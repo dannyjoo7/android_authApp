@@ -2,8 +2,11 @@ package com.example.loginsignupproject.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.widget.*
 import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.loginsignupproject.R
 import com.example.loginsignupproject.data.AccountManager
 
@@ -12,6 +15,7 @@ class MainActivity : ComponentActivity() {
     private var inputId: EditText? = null
     private var inputPW: EditText? = null
     private lateinit var myApplication: MyApplication
+    lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +33,16 @@ class MainActivity : ComponentActivity() {
 
         inputId = findViewById(R.id.input_id)
         inputPW = findViewById(R.id.input_pw)
+
+
+        // 반환 값이 있는 액티비티 설정...
+        activityResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == RESULT_OK) {
+                    inputId!!.setText(it.data?.getStringExtra("ID") ?: "")
+                    inputPW!!.setText(it.data?.getStringExtra("PASSWORD") ?: "")
+                }
+            }
 
         // 로그인 버튼 클릭 시
         loginButton.setOnClickListener {
@@ -62,12 +76,9 @@ class MainActivity : ComponentActivity() {
 
         // 회원 가입 버튼 클릭 시...
         signupBtn.setOnClickListener {
-            inputId!!.setText("");
-            inputPW!!.setText("");
-
             // 액티비티 넘어가기...
             val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
+            activityResultLauncher.launch(intent)
         }
     }
 }
