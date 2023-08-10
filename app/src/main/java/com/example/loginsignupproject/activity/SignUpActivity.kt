@@ -74,7 +74,9 @@ class SignUpActivity : ComponentActivity() {
         dupCheckBtn!!.setOnClickListener {
             val id = inputId!!.text.toString().trim { it <= ' ' }
 
-            if (am.list.find { it.id == id } == null) {
+            if (id == "") {
+                Toast.makeText(this@SignUpActivity, "ID를 입력하세요!", Toast.LENGTH_SHORT).show()
+            } else if (am.list.find { it.id == id } == null) {
                 Toast.makeText(this@SignUpActivity, "ID 사용 가능!", Toast.LENGTH_SHORT).show()
                 inputId!!.isEnabled = false
             } else {
