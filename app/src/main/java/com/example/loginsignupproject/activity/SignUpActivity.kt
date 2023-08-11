@@ -1,7 +1,6 @@
 package com.example.loginsignupproject.activity
 
 import Account
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -13,7 +12,6 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.result.contract.ActivityResultContract
 import com.example.loginsignupproject.R
 
 class SignUpActivity : ComponentActivity() {
@@ -61,7 +59,7 @@ class SignUpActivity : ComponentActivity() {
                 am.list.add(Account(id, pw, name))
 
                 // 결과값 리턴 부분...
-                val intent = Intent(this, MainActivity::class.java).apply {
+                val intent = Intent(this, SignInActivity::class.java).apply {
                     putExtra("ID", id);
                     putExtra("PASSWORD", pw);
                 }
